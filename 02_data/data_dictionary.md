@@ -9,7 +9,7 @@
 | Orders      | `order_delivered_customer_date` | Date/time order was delivered to customer       | —                      | No        |
 | Orders      | `order_estimated_delivery_date` | Estimated delivery date                         | —                      | No        |
 | Order Items | `order_id`                      | Identifier linking the item to an order         | **Join → Orders**      | Yes       |
-| Order Items | `order_item_id`                 | Sequential item/line identifier within an order | Part of row identifier | Yes       |
+| Order Items | `order_item_id`                 | Sequential item/line identifier within an order | Part of composite identifier | Yes       |
 | Order Items | `product_id`                    | Identifier of the product purchased             | **Join → Products**    | **Yes**   |
 | Order Items | `seller_id`                     | Identifier of the seller                        | Seller identifier      | No        |
 | Order Items | `shipping_limit_date`           | Seller's shipping deadline                      | —                      | No        |
