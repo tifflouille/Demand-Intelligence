@@ -66,7 +66,7 @@ GROUP BY product_category_name
 ORDER BY number_of_products DESC;
 -- Result: 
 -- Product category names are in Portuguese. 
--- Theu y will be translated during the Python analysis phase
+-- They will be translated during the Python analysis phase
 -- in order to keep the original category values.
 
 SELECT
@@ -76,15 +76,6 @@ WHERE product_category_name IS NULL
    OR TRIM(product_category_name) = '';
 -- Result: 
 -- No missing or blank categories. 
-
-SELECT *
-FROM clean_orders
-LIMIT 10;
-
-SELECT
-    MIN(order_purchase_datetime) AS earliest_purchase,
-    MAX(order_purchase_datetime) AS latest_purchase
-FROM clean_orders;
 
 -- Create cleaned orders table with standardized purchase date fields.
 CREATE TABLE clean_orders AS
@@ -103,8 +94,14 @@ SELECT
     ) AS order_month
 FROM orders;
 
-SELECT COUNT(*) AS total_rows
-FROM clean_order_items;
+SELECT *
+FROM clean_orders
+LIMIT 10;
+
+SELECT
+    MIN(order_purchase_datetime) AS earliest_purchase,
+    MAX(order_purchase_datetime) AS latest_purchase
+FROM clean_orders;
 
 -- Create cleaned order-items table by joining order-level information.
 CREATE TABLE clean_order_items AS
@@ -122,7 +119,7 @@ JOIN clean_orders co
     ON oi.order_id = co.order_id;
 
 SELECT COUNT(*) AS total_rows
-FROM clean_order_items_with_products;
+FROM clean_order_items;
 
 -- Join product category information while preserving all order-item rows.
 -- A LEFT JOIN keeps transactions whose product ID is missing from the products table.
@@ -140,6 +137,9 @@ SELECT
 FROM clean_order_items coi
 LEFT JOIN products p
     ON coi.product_id = p.product_id;
+
+SELECT COUNT(*) AS total_rows
+FROM clean_order_items_with_products;
 
 SELECT
     COUNT(*) AS missing_categories
